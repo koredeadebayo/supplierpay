@@ -28,6 +28,10 @@ const users = require("./routes/users");
 //Instantiating Supplier from the route folder
 const suppliers = require("./routes/suppliers");
 
+//Instantiating Payment from the route folder
+const payments = require("./routes/payments");
+
+
 //Cors middleware
 app.use(cors());
 
@@ -44,8 +48,11 @@ require('./config/passport')(passport);
 //User middleware configuration
 app.use('/users', users);
 
-//User middleware configuration
+//Supplier middleware configuration
 app.use('/suppliers', suppliers);
+
+//Payment middleware configuration
+app.use('/payments', payments);
 
 //Index Route
 app.get('/', (req, res) =>{

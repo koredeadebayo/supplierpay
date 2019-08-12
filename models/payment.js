@@ -5,11 +5,10 @@ const Supplier = require('./supplier');
 
 //User Schema
 const PaymentSchema = mongoose.Schema({
-    supplier :[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Supplier',
+    supplier :{
+        type: String,
         required: true
-    }],
+    },
     purpose :{
         type: String,
         required: true
@@ -19,6 +18,7 @@ const PaymentSchema = mongoose.Schema({
         required: true
     },
     date :{
+        type: Date,
         default: Date.now()
     }
 });
@@ -28,8 +28,6 @@ const Payment = module.exports = mongoose.model('Payment ', PaymentSchema);
 module.exports.getPaymentById = function(id, callback){
     Payment.findById(id, callback);     
 }
-
-
 
 module.exports.addPayment = function(newPayment, callback){
             newPayment.save(callback);
