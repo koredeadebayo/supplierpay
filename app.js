@@ -25,11 +25,15 @@ mongoose.connection.on('error', (err) =>{
 //Instantiating User from the route folder
 const users = require("./routes/users");
 
+//Instantiating Supplier from the route folder
+const suppliers = require("./routes/suppliers");
+
 //Cors middleware
 app.use(cors());
 
 //Body Parser middleware 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 //Passport Middleware
 app.use(passport.initialize());
@@ -39,6 +43,9 @@ require('./config/passport')(passport);
 
 //User middleware configuration
 app.use('/users', users);
+
+//User middleware configuration
+app.use('/suppliers', suppliers);
 
 //Index Route
 app.get('/', (req, res) =>{
