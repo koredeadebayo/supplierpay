@@ -12,11 +12,15 @@ const SupplierSchema = mongoose.Schema({
         required: true
     },
     bank :{
-        type: String,
+        type: Number,
         required: true
     },
     nuban :{
         type: Number,
+        required: true
+    },
+    recipient_code:{
+        type: String,
         required: true
     }
 });

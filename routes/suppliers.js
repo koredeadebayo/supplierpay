@@ -4,26 +4,55 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const Supplier = require('../models/supplier');
 const config = require('../config/database');
+const Request = require('request');
 
 
 
 //Create Supplier
-router.post('/add', passport.authenticate('jwt', {session: false}), (req, res, next)=>{
-    const newSupplier = new Supplier({
-        name: req.body.name,
-        category: req.body.category,
-        bank: req.body.bank,
-        nuban: req.body.nuban
+router.post('/add', (req, res, next)=>{
+
+    Request.post({
+        "headers": {"Authorization": "Bearer "+ config.paySecret, "content-type": "application/json" },
+        "url": "https://api.paystack.co/transferrecipient",
+        "body": JSON.stringify({
+            "type": "nuban",
+            "name": req.body.name,
+            "description": req.body.category,
+            "account_number": req.body.nuban,
+            "bank_code": req.body.bank,
+            "currency": "NGN",
+            "metadata": {
+                "job": req.body.category}
+            })
+        }, (err, response, body) => {
+            if(err){
+                res.json(err)}
+
+            else{
+             payResponse = JSON.parse(body);
+            //  console.log(payResponse.data.recipient_code);
+
+            const newSupplier = new Supplier({
+                name: payResponse.data.name,
+                category: payResponse.data.description,
+                bank: req.body.bank,
+                nuban: req.body.nuban,
+                recipient_code: payResponse.data.recipient_code
+            });
+            Supplier.addSupplier(newSupplier, (err, supplier) =>{
+                if(err){
+                    console.log(err);
+                    res.json({success: false, msg: 'Failed to register Supplier'});
+                }else{
+                    res.json({success: true, msg: 'Supplier has been successfully added'});
+                }
+            });
+        } 
     });
+    
     // console.log(req.body.name);
 
-    Supplier.addSupplier(newSupplier, (err, supplier) =>{
-        if(err){
-            res.json({success: false, msg: 'Failed to register Supplier'});
-        }else{
-            res.json({success: true, msg: 'Supplier has been successfully added'});
-        }
-    });
+
 });
 
 //List Supplier
