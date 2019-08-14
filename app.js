@@ -32,6 +32,9 @@ const suppliers = require("./routes/suppliers");
 //Instantiating Payment from the route folder
 const payments = require("./routes/payments");
 
+//Static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 //Cors middleware
 app.use(cors());
@@ -60,8 +63,6 @@ app.get('/', (req, res) =>{
     res.send('invalid endpoint');
 });
 
-//Static folder
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
