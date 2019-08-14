@@ -60,12 +60,14 @@ app.use('/payments', payments);
 //     res.send('invalid endpoint');
 // });
 
+//Static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
   });
 
-//Static folder
-// app.use(express.static(path.join(__dirname, 'public')));
+
 
 //Start Server  
 app.listen(port, ()=>{
