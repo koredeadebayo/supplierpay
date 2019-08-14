@@ -5,18 +5,21 @@ const config = require('../config/database');
 //User Schema
 const SupplierSchema = mongoose.Schema({
     name :{
-        type: String
+        type: String,
+        unique : true, 
+        required : true,
+        dropDups: true
     },
     category :{
         type: String,
         required: true
     },
     bank :{
-        type: Number,
+        type: String,
         required: true
     },
     nuban :{
-        type: Number,
+        type: String,
         required: true
     },
     recipient_code:{

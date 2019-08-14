@@ -7,7 +7,16 @@ const Supplier = require('../models/supplier');
 const config = require('../config/database');
 const Request = require('request');
 
-//{"source": "balance", "reason": "Calm down", "amount":3794800, "recipient": "RCP_gx2wn530m0i3w3m"}'
+router.get('/list', (req, res, next)=>{
+    // console.log('It is working');
+    Payment.find(function(err, payments){
+        if(err) throw (err);
+        else{
+            res.json(payments);
+        }
+    });
+});
+
  router.post('/make', (req, res, next) =>{
 
     const name = req.body.supplier;
@@ -33,11 +42,11 @@ const Request = require('request');
                     if(err){
                     response.json(err);
                     }else{
-                    console.log(body);    
+                    // console.log(body);    
                     const newPayment = new Payment({
                         supplier :supplier.name,
                         purpose : purpose,
-                        amount : amount
+                        amount : amount 
                     });   
                     Payment.addPayment(newPayment, (err, payment)=>{
                         if(err){
@@ -53,14 +62,7 @@ const Request = require('request');
         
     });
     
- router.get('/list', (req, res, next)=>{
-    Payment.find(function(err, payments){
-        if(err) throw (err);
-        else{
-            res.json(payments);
-        }
-    });
- });
+
 
  });
 

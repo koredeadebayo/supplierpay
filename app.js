@@ -10,6 +10,7 @@ const app = express();
 const port = 3000;
 
 //Database Connection
+mongoose.set('useCreateIndex', true);
 mongoose.connect(config.database, { useNewUrlParser: true });
 
 //On connection

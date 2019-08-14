@@ -7,7 +7,7 @@ const Supplier = require('./supplier');
 const PaymentSchema = mongoose.Schema({
     supplier :{
         type: String,
-        required: true
+        required : true
     },
     purpose :{
         type: String,

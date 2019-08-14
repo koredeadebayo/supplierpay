@@ -10,7 +10,7 @@ const Request = require('request');
 
 //Create Supplier
 router.post('/add', (req, res, next)=>{
-
+    console.log(req.body);
     Request.post({
         "headers": {"Authorization": "Bearer "+ config.paySecret, "content-type": "application/json" },
         "url": "https://api.paystack.co/transferrecipient",
@@ -26,11 +26,11 @@ router.post('/add', (req, res, next)=>{
             })
         }, (err, response, body) => {
             if(err){
-                res.json(err)}
+                res.json(err)} 
 
             else{
              payResponse = JSON.parse(body);
-            //  console.log(payResponse.data.recipient_code);
+             console.log(body);
 
             const newSupplier = new Supplier({
                 name: payResponse.data.name,
