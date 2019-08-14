@@ -56,9 +56,9 @@ app.use('/suppliers', suppliers);
 app.use('/payments', payments);
 
 //Index Route
-// app.get('/', (req, res) =>{
-//     res.send('invalid endpoint');
-// });
+app.get('/', (req, res) =>{
+    res.send('invalid endpoint');
+});
 
 //Static folder
 app.use(express.static(path.join(__dirname, 'public')));
